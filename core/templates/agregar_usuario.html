@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Usuario</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Agregar Usuario</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group mb-3">
+                <label for="username">Nombre de usuario:</label>
+                <input type="text" name="username" class="form-control" id="username" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="password">Contraseña:</label>
+                <input type="password" name="password" class="form-control" id="password" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="role">Rol:</label>
+                <select name="role" id="role" class="form-control" required onchange="toggleFields()">
+                    <option value="alumno">Alumno</option>
+                    <option value="profesor">Profesor</option>
+                </select>
+            </div>
+            <div class="form-group mb-3">
+                <label for="nombres">Nombres:</label>
+                <input type="text" name="nombres" class="form-control" id="nombres" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="apellidos">Apellidos:</label>
+                <input type="text" name="apellidos" class="form-control" id="apellidos" required>
+            </div>
+            <div class="form-group mb-3">
+                <label for="rut">RUT:</label>
+                <input type="text" name="rut" class="form-control" id="rut">
+            </div>
+            <div class="form-group mb-3">
+                <label for="direccion">Dirección:</label>
+                <input type="text" name="direccion" class="form-control" id="direccion">
+            </div>
+            <div class="form-group mb-3">
+                <label for="telefono">Teléfono:</label>
+                <input type="text" name="telefono" class="form-control" id="telefono">
+            </div>
+            <div class="form-group mb-3" id="grado-group" style="display: none;">
+                <label for="grado">Grado:</label>
+                <input type="text" name="grado" class="form-control" id="grado">
+            </div>
+            <div class="form-group mb-3" id="especialidad-group" style="display: none;">
+                <label for="especialidad">Especialidad:</label>
+                <input type="text" name="especialidad" class="form-control" id="especialidad">
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{% url 'director_dashboard' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+
+    <script>
+        // Función para mostrar/ocultar los campos "Grado" y "Especialidad" según el rol seleccionado
+        function toggleFields() {
+            const role = document.getElementById('role').value;
+            const gradoGroup = document.getElementById('grado-group');
+            const especialidadGroup = document.getElementById('especialidad-group');
+            
+            // Mostrar/ocultar campos según el rol
+            if (role === 'alumno') {
+                gradoGroup.style.display = 'block';
+                especialidadGroup.style.display = 'none';
+            } else if (role === 'profesor') {
+                gradoGroup.style.display = 'none';
+                especialidadGroup.style.display = 'block';
+            } else {
+                gradoGroup.style.display = 'none';
+                especialidadGroup.style.display = 'none';
+            }
+        }
+
+        // Inicializa los campos según el valor actual del rol
+        document.addEventListener('DOMContentLoaded', toggleFields);
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Asignatura</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Agregar Asignatura</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre de la Asignatura</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Introduce el nombre de la asignatura" required>
+            </div>
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <textarea class="form-control" id="descripcion" name="descripcion" rows="3" placeholder="Escribe una descripción breve" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="horario_inicio" class="form-label">Horario de Inicio</label>
+                <input type="time" class="form-control" id="horario_inicio" name="horario_inicio" required>
+            </div>
+            <div class="mb-3">
+                <label for="horario_fin" class="form-label">Horario de Fin</label>
+                <input type="time" class="form-control" id="horario_fin" name="horario_fin" required>
+            </div>
+            <div class="mb-3">
+                <label for="profesor" class="form-label">Profesor</label>
+                <select class="form-select" id="profesor" name="profesor" required>
+                    <option value="" disabled selected>Selecciona un profesor</option>
+                    {% for profesor in profesores %}
+                    <option value="{{ profesor.id }}">{{ profesor.nombres }} {{ profesor.apellidos }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="sala" class="form-label">Sala</label>
+                <input type="text" class="form-control" id="sala" name="sala" placeholder="Introduce el número de sala" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{% url 'director_dashboard' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

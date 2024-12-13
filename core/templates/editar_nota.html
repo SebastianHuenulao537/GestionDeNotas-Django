@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Nota</title>
+</head>
+<body>
+    <h1>Editar Nota</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="alumno">Alumno:</label>
+        <select name="alumno" id="alumno" required>
+            {% for alumno in alumnos %}
+                <option value="{{ alumno.id }}" {% if alumno.id == nota.alumno %}selected{% endif %}>
+                    {{ alumno.nombres }} {{ alumno.apellidos }}
+                </option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="asignatura">Asignatura:</label>
+        <select name="asignatura" id="asignatura" required>
+            {% for asignatura in asignaturas %}
+                <option value="{{ asignatura.id }}" {% if asignatura.id == nota.asignatura %}selected{% endif %}>
+                    {{ asignatura.nombre }}
+                </option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="calificacion">Calificación:</label>
+        <input type="number" name="calificacion" id="calificacion" value="{{ nota.calificacion }}" required>
+        <br>
+        <button type="submit">Guardar Cambios</button>
+        <a href="{% url 'profesor_dashboard' %}">Cancelar</a>
+    </form>
+</body>
+</html>
