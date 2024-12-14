@@ -4,23 +4,12 @@ from .models import Nota, Asignatura
 import requests
 
 # Formulario de inicio de sesión
+from django import forms
+
 class LoginForm(forms.Form):
-    username = forms.CharField(
-        label="Usuario",
-        max_length=150,
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Ingresa tu usuario',
-        })
-    )
-    password = forms.CharField(
-        label="Contraseña",
-        max_length=128,
-        widget=forms.PasswordInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Ingresa tu contraseña',
-        })
-    )
+    username = forms.EmailField(label="Correo Electrónico", required=True)
+    password = forms.CharField(label="Contraseña", widget=forms.PasswordInput, required=True)
+
 
 # Formulario para gestionar notas
 class NotaForm(forms.ModelForm):

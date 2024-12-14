@@ -3,26 +3,6 @@ from django.db import models
 from django.conf import settings
 from django.utils.timezone import now
 
-# class Usuario(AbstractUser):
-#     ROLE_CHOICES = [
-#         ('alumno', 'Alumno'),
-#         ('profesor', 'Profesor'),
-#         ('director', 'Director'),
-#     ]
-#     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='alumno')
-#     nombres = models.CharField(max_length=100, default="Sin nombre")
-#     apellidos = models.CharField(max_length=100, default="Sin apellido")
-#     rut = models.CharField(max_length=12, default="00000000-0")
-#     direccion = models.CharField(max_length=200, default="Sin dirección")
-#     fecha_nacimiento = models.DateField(null=True, blank=True)
-#     telefono = models.CharField(max_length=15, default="000000000")
-#     grado = models.CharField(max_length=50, blank=True, null=True)
-#     especialidad = models.CharField(max_length=100, default="Sin especialidad")  # Nuevo campo
-
-#     def __str__(self):
-#         return f"{self.nombres} {self.apellidos}"
-
-
 class Asignatura(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()

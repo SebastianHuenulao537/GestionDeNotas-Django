@@ -9,7 +9,10 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
+from dotenv import load_dotenv
+import firebase_admin
+from firebase_admin import credentials, initialize_app
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,12 +28,30 @@ SECRET_KEY = 'django-insecure-v$26h+0_rpov6&a1(^ta)i5e3qit99b0tocjg0ay&3atw+y_au
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Load environment variables from .env file
+load_dotenv()
 
-AUTHENTICATION_BACKENDS = [
-    'core.CustomAuth.CustomAuth',
-    'django.contrib.auth.backends.ModelBackend',  # Opcional para soporte del backend por defecto
-]
+# Configuración para Pyrebase
+FIREBASE_CONFIG = {
+    "apiKey": os.getenv("FIREBASE_API_KEY"),
+    "authDomain": os.getenv("FIREBASE_AUTH_DOMAIN"),
+    "projectId": os.getenv("FIREBASE_PROJECT_ID"),
+    "storageBucket": os.getenv("FIREBASE_STORAGE_BUCKET"),
+    "messagingSenderId": os.getenv("FIREBASE_MESSAGING_SENDER_ID"),
+    "appId": os.getenv("FIREBASE_APP_ID"),
+    "measurementId": os.getenv("FIREBASE_MEASUREMENT_ID"),
+    "databaseURL": os.getenv("FIREBASE_DATABASE_URL"),
+}
+
+# Configuración para Firebase Admin SDK
+FIREBASE_ADMIN_CREDENTIALS = os.path.join(BASE_DIR, 'settings/firebase/firebase.json')
+
+# Inicializar Firebase Admin SDK
+cred = credentials.Certificate(FIREBASE_ADMIN_CREDENTIALS)
+initialize_app(cred, {
+    'databaseURL': os.getenv("FIREBASE_DATABASE_URL")
+})
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -52,6 +73,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'core.middleware.FirebaseAuthenticationMiddleware'
 ]
 
 ROOT_URLCONF = 'gestion_de_notas.urls'
