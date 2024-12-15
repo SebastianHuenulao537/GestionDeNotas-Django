@@ -50,6 +50,15 @@ def login_view(request):
                 role = decoded_token.get("role")  # Si tienes un custom claim "role" en Firebase
                 print(f"Rol correspondiente del usuario es {role}")
 
+                # AQUI DEBES DE COMPARAR EL EMAIL QUE INGRESO EL USUARIO
+                # Y DEBES DE HACER UNA CONSULTA A LA API EN EL ENDPOINT DE /profesores
+                # Y COMPARAR SI HAY ALGUN DOCENTE CON ESTE EMAIL
+                # SI NO HAY NINGUN DOCENTE CON ESTE EMAIL
+                # DEBE DE DAR UN MENSAJE DE ERROR DICIENDO QUE
+                # ESTE USUARIO NO TIENE NINGUN DOCENTE ASIGNADO
+                # EN CASO DE QUE SI EXISTA UN DOCENTE CON ESTE EMAIL
+                # PUEDE INGRESAR AL SISTEMA
+
             except Exception as e:
                 messages.error(request, "Usuario o contraseña incorrectos.")
                 print(f"Error de autenticación con Firebase: {e}")
@@ -64,3 +73,15 @@ def logout_view(request):
     logout(request)  # Elimina la sesión de Django
     return redirect("login")
 
+""" 
+EN EL RESTO DEL CODIGO DEBES DE GENERAR LAS VISTAS
+PARA INTERACTUAR CON EL CRUD DE CADA MODELO QUE ESTA DISPONIBLE EN LA API
+
+// Modelos disponibles
+const collections = {
+    asignaturas: 'asignaturas',
+    alumnos: 'alumnos',
+    profesores: 'profesores',
+    notas: 'notas'
+};
+"""
